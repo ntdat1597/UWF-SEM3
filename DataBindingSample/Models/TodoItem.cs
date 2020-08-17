@@ -8,5 +8,7 @@ namespace DataBindingSample.Models
 {
     class TodoItem
     {
+        public string Title { get; internal set; }
     }
 }
+

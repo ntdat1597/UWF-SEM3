@@ -5,10 +5,43 @@
     xmlns:local="using:DataBindingSample"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:DataBindingSample.ViewModels" 
+    xmlns:m1="using:DataBindingSample.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.DataContext>
+        <vm:MainPageViewModel/>
+    </Page.DataContext>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <ListView Header="Classic" ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Binding Title"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <ListView Header="Compiled"
+                  ItemsSource="{x:Bind ViewModel.Items}"
+                  Grid.Column="1"
+                  xmlns:m="using.DataBindingSample.Models">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="m1:TodoItem">
+                    <TextBlock Text="{x:Bind Title}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
 
     </Grid>
 </Page>

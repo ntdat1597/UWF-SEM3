@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Observable_Collection.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Contacts;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -12,19 +15,46 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Contact = Observable_Collection.Models.Contact;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Observable_Collection
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+   
     public sealed partial class MainPage : Page
     {
+        private List<Icon> Icons;
+
+        public ObservableCollection<Contact> Contacts;
         public MainPage()
         {
             this.InitializeComponent();
+            Icons = new List<Icon>();
+
+            Icons.Add(new Icon{ IconPath = "Assets/male-01.png"});
+            Icons.Add(new Icon{ IconPath = "Assets/male-02.png"});
+            Icons.Add(new Icon{ IconPath = "Assets/male-03.png"});
+            Icons.Add(new Icon{ IconPath = "Assets/female-01.png"});
+            Icons.Add(new Icon{ IconPath = "Assets/female-02.png"});
+            Icons.Add(new Icon{ IconPath = "Assets/female-03.png"});
+
+
+            Contacts = new ObservableCollection<Contact>();
         }
+        
+        private void NewContactButton_click(object sender, RoutedEventArgs e)
+        {
+            string avatar = ((Icon)AvatarComboBox.SelectedValue).IconPath;
+            Contacts.Add(new Contact { FirstName = FirstNameTextBox.Text, LastName = LastNameTextBox.Text, AvatarPath = avatar });
+
+            FirstNameTextBox.Text = "";
+            LastNameTextBox.Text = "";
+            AvatarComboBox.SelectedIndex = -1;
+
+            FirstNameTextBox.Focus(FocusState.Programmatic);
+        }
+        
     }
 }

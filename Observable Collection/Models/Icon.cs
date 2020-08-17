@@ -8,6 +8,6 @@ namespace Observable_Collection.Models
 {
     class Icon
     {
-        public String IconPath { get; set; }
+        public string IconPath { get; set; }
     }
 }

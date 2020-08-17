@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataBindingSample.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace DataBindingSample
         public MainPage()
         {
             this.InitializeComponent();
+
+            this.DataContextChanged += (s, e) =>
+            { ViewModel = DataContext as ViewModels.MainPageViewModel; };
         }
+
+        internal MainPageViewModel ViewModel { get; private set; }
     }
 }

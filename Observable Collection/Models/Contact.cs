@@ -8,10 +8,10 @@ namespace Observable_Collection.Models
 {
    public class Contact
     {
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
-        public String AvatarPath { get; set; }
+        public string AvatarPath { get; set; }
     }
 }
