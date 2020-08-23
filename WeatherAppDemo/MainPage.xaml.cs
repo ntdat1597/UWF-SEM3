@@ -27,7 +27,7 @@ namespace WeatherAppDemo
         {
             this.InitializeComponent();
         }
-
+        private const string API_KEY = "e8d503957ce4380d9678c283a39fabda";
         [Obsolete]
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -39,7 +39,8 @@ namespace WeatherAppDemo
 
                 RootObject myWeather = await APIManager.GetWeather(lat, lon);
 
-                string icon = String.Format("ms-appx:///Assets/Weather/{0}.png", myWeather.weather[0].icon);
+               
+                string icon = String.Format("ms-appx:///Assets/{0}.png", myWeather.weather[0].icon);
                 ResultIMage.Source = new BitmapImage(new Uri(icon, UriKind.Absolute));
                 TempTextBlock.Text = ((double)myWeather.main.temp).ToString();
                 DescriptionTextBlock.Text = myWeather.weather[0].description;

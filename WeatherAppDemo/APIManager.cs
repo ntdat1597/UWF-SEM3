@@ -7,14 +7,15 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace WeatherAppDemo
 {
-    class APIManager
+    public class APIManager
     {
         public async static Task<RootObject> GetWeather(double lat, double lon)
         {
             var http = new HttpClient();
-            var url = String.Format("http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units=metric&appid=96381a872b1b405c5bf83b2ed63d9561");
+            var url = String.Format("http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units=metric&appid=96381a872b1b405c5bf83b2ed63d9561",lat,lon);
             var response = await http.GetAsync(url); // nhan data json tu weather.org
             var result = await response.Content.ReadAsStringAsync();
 
@@ -30,16 +31,11 @@ namespace WeatherAppDemo
     }
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
-    public class Root
-    {
-        public string cod { get; set; }
-        public string message { get; set; }
-    }
-
+    
     public class Coord
     {
         public double lon { get; set; }
-        public int lat { get; set; }
+        public double lat { get; set; }
     }
 
     public class Weather
@@ -75,6 +71,7 @@ namespace WeatherAppDemo
     {
         public int type { get; set; }
         public int id { get; set; }
+        public double message { get; set; }
         public string country { get; set; }
         public int sunrise { get; set; }
         public int sunset { get; set; }
