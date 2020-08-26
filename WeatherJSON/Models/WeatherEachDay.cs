@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace WeatherJSON.Models
 {
-    class WeatherEachDay
-    {
         public class Headline
         {
             public string EffectiveDate { get; set; }
@@ -69,7 +67,7 @@ namespace WeatherJSON.Models
 
             public int EpochDate { get; set; }
 
-            public Tempereture1 Tempereture1 { get; set; }
+            public Tempereture1 Tempereture { get; set; }
 
             public Day Day { get; set; }
 
@@ -79,27 +77,28 @@ namespace WeatherJSON.Models
 
             public string Link { get; set; }
 
-            
+           
         }
         public class WeatherEachDay
         {
             public Headline Headline { get; set; }
 
             public List<DailyForecast> DailyForecasts { get; set; }
+
+            public async static Task<WeatherEachDay> GetWeatherEach(string url)
+            {
+                var http = new HttpClient();
+                var response = await http.GetAsync(url);
+                var result = await response.Content.ReadAsStringAsync();
+                var serializer = new DataContractJsonSerializer(typeof(WeatherEachDay));
+                var dataStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                var value = serializer.ReadObject(dataStream) as WeatherEachDay;
+
+                return value;
+
+
+            }
         }
 
-        public async static Task<WeatherEachDay> GetWeatherEach(string url)
-        {
-            var http = new HttpClient();
-            var response = await http.GetAsync(url);
-            var result = await response.Content.ReadAsStringAsync();
-            var serializer = new DataContractJsonSerializer(typeof(WeatherEachDay));
-            var dataStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            var value = serializer.ReadObject(dataStream) as WeatherEachDay;
-
-            return value;
-
-
-        }
-    }
+ 
 }

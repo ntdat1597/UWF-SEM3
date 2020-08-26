@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using WeatherJSON.Models;
+using System.Configuration;
 using Windows.UI.Xaml.Controls;
+
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -16,13 +18,13 @@ namespace WeatherJSON
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        ObservableCollection<WeatherJSON> WeatherEachHours;
+        ObservableCollection<WeatherJson> WeatherEachHours;
         ObservableCollection<DailyForecast> WeatherEachDays;
         public MainPage()
         {
             this.InitializeComponent();
 
-            WeatherEachHours =new ObservableCollection<WeatherJSON>();
+            WeatherEachHours =new ObservableCollection<WeatherJson>();
             InitJSON();
 
             WeatherEachDays = new ObservableCollection<DailyForecast>();
@@ -31,7 +33,7 @@ namespace WeatherJSON
         private async void InitJSON()
         {
             var url = "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/353412?apikey=tbFOLXfZmAxAexEYOmXhcxnbZBDjQBSh&language=vi-vn&metric=true" + "apikey = CxILqfbYMdKI30fs02iXyl2JZJdF2MeU=true";
-            var list = await WeatherJSON.GetJSON(url) as List<WeatherJSON>;
+            var list = await WeatherJson.GetJSON(url) as List<WeatherJson>;
             Debug.WriteLine("Count:" + list.Count);
 
             list.ForEach(it =>
@@ -60,7 +62,7 @@ namespace WeatherJSON
         {
             var urlFiveDay = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/353412?apikey=tbFOLXfZmAxAexEYOmXhcxnbZBDjQBSh&language=vi-vn&metric=true" + "apikey=CxILqfbYMdKI30fs02iXyl2JZJdF2Metric=true";
             var obj = await WeatherEachDay.GetWeatherEach(urlFiveDay) as WeatherEachDay;
-            obj.DailyForecast.ForEach(it =>
+             obj.DailyForecasts.ForEach(it =>
             {
                 var matchs = Regex.Matches(it.Date, "\\d+");
                 var date = new DateTime(int.Parse(matchs[0].Value), int.Parse(matchs[1].Value), int.Parse(matchs[2].Value));
@@ -68,12 +70,12 @@ namespace WeatherJSON
                 it.Date = date.DayOfWeek.ToString();
                 it.Day.Icon = string.Format("https://vortex.accweather.com/adc2010/images/slate/icons/{0}.svg", it.Day.Icon);
                 Debug.WriteLine("Binh:" + it.Date);
-                WeatherEachDays.Add(it);
+                WeatherEachDays.Add(it);         
             }
             );
             Today.Text = WeatherEachDays[0].Date + "Today";
-            MaxTemperature.Text = WeatherEachDays[0].Temperature.Maximum.Value + "";
-            MinTemperature.Text = WeatherEachDays[0].Temperature.Minimum.Value + "";
+            MaxTemperature.Text = WeatherEachDays[0].Tempereture.Maximum.Value + "";
+            MinTemperature.Text = WeatherEachDays[0].Tempereture.Minimum.Value + "";
             WeatherEachDays.RemoveAt(0);
         }
     }

@@ -4,10 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WeatherJSON"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:data="using:WeatherJSON.Models"
-    Width="320"
-    Height="580"
-    mc:Ignorable="d"
+     mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:data="using:WeatherJSON.Models"
+    xmlns:u="using:WeatherJSON.Models"
+    d:Width="320"
+    d:Height="580"  
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -83,7 +85,7 @@
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
                 <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="data:WeatherJSON">
+                    <DataTemplate x:DataType="data:WeatherJson">
                         <StackPanel Width="45" HorizontalAlignment="Stretch">
 
                             <TextBlock HorizontalAlignment="Center"
@@ -130,19 +132,17 @@
                         <TextBlock
                             Margin="38,0,0,0"
                             RelativePanel.RightOf="ImageWeather"
-                            Text="{x:Bind Temperature.Maximum.Value}"/>
+                            Text="{x:Bind Tempereture.Maximum.Value}"/>
 
                         <TextBlock Margin="76,0,0,0"
                                    FontSize="13"
                                    Foreground="Brown"
                                    RelativePanel.RightOf="ImageWeather"
-                                   Text="{x:Bind Temperature.Minimum.Value}"/>
+                                   Text="{x:Bind Tempereture.Minimum.Value}"/>
 
                     </RelativePanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        
-
     </Grid>
 </Page>
